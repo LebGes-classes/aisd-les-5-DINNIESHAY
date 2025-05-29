@@ -8,6 +8,12 @@ void PriorityQueue::enqueue(int priority, const std::string & data)
 
 std::string PriorityQueue::dequeue()
 {
+  //Если очередь пуста, выбрасываем исключение
+  if (heap.getSize() == 0)
+  {
+    throw std::logic_error("Queue is empty.\n");
+  }
+
   Item itemToDel = heap.pop();
 
   return itemToDel.data;
@@ -38,11 +44,13 @@ bool PriorityQueue::isEmpty()
 
 void PriorityQueue::print()
 {
+  //Создаём копию очереди и поочереди удаляем из неё элементы, выводя их
   PriorityQueue tempQueue = *this;
   while (!tempQueue.isEmpty())
   {
     std::cout << tempQueue.dequeue() << " ";
   }
+  std::cout << std::endl;
 }
 
 PriorityQueue::Item::Item(int priority, std::string data)

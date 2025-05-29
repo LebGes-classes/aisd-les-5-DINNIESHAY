@@ -55,6 +55,11 @@ void MinBinaryHeap<T>::push(T element)
 template <typename T>
 T MinBinaryHeap<T>::pop()
 {
+  if (array.empty())
+  {
+    throw std::logic_error("Queue is empty.\n");
+  }
+
   //Корневой элемент будет удаляться
   T elementToPop = array[0];
 
