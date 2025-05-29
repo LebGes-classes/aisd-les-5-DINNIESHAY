@@ -38,9 +38,10 @@ bool PriorityQueue::isEmpty()
 
 void PriorityQueue::print()
 {
-  while (heap.getSize() != 0)
+  PriorityQueue tempQueue = *this;
+  while (!tempQueue.isEmpty())
   {
-    std::cout << dequeue() << " ";
+    std::cout << tempQueue.dequeue() << " ";
   }
 }
 
