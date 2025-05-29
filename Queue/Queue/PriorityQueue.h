@@ -44,11 +44,8 @@ private:
 
     //Перегрузка операторов <, <=, >, >=
     bool operator<(const Item & otherItem) const;
-
     bool operator<=(const Item & otherItem) const;
-
     bool operator>(const Item & otherItem) const;
-
     bool operator>=(const Item & otherItem) const;
   };
 

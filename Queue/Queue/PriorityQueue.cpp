@@ -78,4 +78,3 @@ bool PriorityQueue::Item::operator>=(const Item & otherItem) const
 {
   return this->priority >= otherItem.priority;
 }
-
