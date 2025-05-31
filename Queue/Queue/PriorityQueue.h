@@ -1,12 +1,11 @@
 ﻿#ifndef PRIORITY_QUEUE_H
 #define PRIORITY_QUEUE_H
 
+#include "MinBinaryHeap.h"
 #include <string>
 #include <vector>
 #include <utility>
 #include <iostream>
-
-#include "MinBinaryHeap.h"
 
 /*
   Неубывающая очередь с приоритетами на основе бинарной пирамиды.
