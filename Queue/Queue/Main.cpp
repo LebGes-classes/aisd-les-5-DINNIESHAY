@@ -60,14 +60,14 @@ void getAverageTimeOf(void(*algorithm)(int))
 {
   DurationCounter durationCounter;
 
-  const int Nstart = 10;
-  const int Nend = 50;
+  const int startNumOfInputData = 10;
+  const int endNumOfInputData = 50;
   const int dN = 5;
 
-  for (int N = Nstart; N <= Nend; N += dN)
+  for (int n = startNumOfInputData; n <= endNumOfInputData; n += dN)
   {
-    auto averageTime = durationCounter.measure(algorithm, N);
-    std::cout << "Время для " << N << ": " << std::fixed << std::setprecision(0) << averageTime << " нс\n";
+    auto averageTime = durationCounter.measure(algorithm, n);
+    std::cout << "Время для " << n << ": " << std::fixed << std::setprecision(0) << averageTime << " нс\n";
   }
 }
 
