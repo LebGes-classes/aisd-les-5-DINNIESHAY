@@ -1,12 +1,11 @@
 ﻿#include "PriorityQueue.h"
 #include "DurationCounter.h"
-#include <iostream>
 #include <ctime>
-#include <iomanip>
 #include "windows.h"
 
 PriorityQueue queue = PriorityQueue();
 
+//Проверка очереди при добавлении и удалении элементов
 void checkQueue()
 {
   PriorityQueue queue = PriorityQueue();
@@ -33,12 +32,14 @@ void checkQueue()
   */
 }
 
+//Заполнение очереди заданным количеством элементов
 void fillQueue(int numOfValues)
 {
   std::srand(std::time(0));
 
   for (int i = 0; i < numOfValues; i++)
   {
+    //Приоритет задается рандомно в диапазоне [0, 99]
     int randomPriority = rand() % 100;
     std::string data = std::to_string(randomPriority);
 
@@ -46,28 +47,12 @@ void fillQueue(int numOfValues)
   }
 }
 
+//Очищение очереди из заданного количества элементов
 void clearQueue(int numOfValues)
 {
-  std::srand(std::time(0));
-
   for (int i = 0; i < numOfValues; i++)
   {
     queue.dequeue();
-  }
-}
-
-void getAverageTimeOf(void(*algorithm)(int))
-{
-  DurationCounter durationCounter;
-
-  const int startNumOfInputData = 10;
-  const int endNumOfInputData = 50;
-  const int dN = 5;
-
-  for (int n = startNumOfInputData; n <= endNumOfInputData; n += dN)
-  {
-    auto averageTime = durationCounter.measure(algorithm, n);
-    std::cout << "Время для " << n << ": " << std::fixed << std::setprecision(0) << averageTime << " нс\n";
   }
 }
 
@@ -81,9 +66,17 @@ int main()
   checkQueue();
  
   //Исследование производительности методов очереди
+  DurationCounter durationCounter;
+  //Начальное количество входных данных
+  const int startNumOfInputData = 10;
+  //Конечное количество входных данных
+  const int endNumOfInputData = 50;
+  //Шаг
+  const int step = 5;
+
   std::cout << "\nСреднее время вставки элементов в очередь для размера входных данных от 10 до 50\n";
-  getAverageTimeOf(fillQueue);
+  durationCounter.printTimeInRange(fillQueue, startNumOfInputData, endNumOfInputData, step);
 
   std::cout << "\nСреднее время удаления элементов из очереди для размера входных данных от 10 до 50\n";
-  getAverageTimeOf(clearQueue);
+  durationCounter.printTimeInRange(clearQueue, startNumOfInputData, endNumOfInputData, step);
 }
