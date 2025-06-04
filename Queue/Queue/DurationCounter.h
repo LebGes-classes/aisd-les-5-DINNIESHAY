@@ -2,6 +2,7 @@
 #define DURATION_COUNTER_H
 
 #include <chrono>
+#include <functional>
 
 using timePoint_t = std::chrono::high_resolution_clock::time_point;
 
@@ -10,9 +11,7 @@ class DurationCounter
 public:
 
   //Измерение времени работы заданного алгоритма с заданным количеством входных данных
-  long long measure(void(*algorithm)(int), int numOfInputData);
-  //Вывод времени работы алгоритма с входными данными из диапазона
-  void printTimeInRange(void(*alorithm)(int), int start, int end, int step);
+  long long measure(const std::function<void()> & algorithm);
 
 private:
 

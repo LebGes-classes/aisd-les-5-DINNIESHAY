@@ -3,8 +3,6 @@
 
 #include "MinBinaryHeap.h"
 #include <string>
-#include <vector>
-#include <utility>
 #include <iostream>
 
 /*
@@ -15,6 +13,12 @@
 class PriorityQueue
 {
 public:
+
+  //Конструктор без параметров (по умолчанию)
+  PriorityQueue() = default;
+
+  //Деструктор (по умолчанию)
+  ~PriorityQueue() = default;
 
   //Добавление элемента в очередь
   void enqueue(int priority, const std::string & data);

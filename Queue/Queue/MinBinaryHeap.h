@@ -76,6 +76,11 @@ T MinBinaryHeap<T>::pop()
 template <typename T>
 T MinBinaryHeap<T>::getMin()
 {
+  if (array.empty())
+  {
+    throw std::logic_error("Error: Heap is empty.\n");
+  }
+
   T minElement = array[0];
 
   return minElement;

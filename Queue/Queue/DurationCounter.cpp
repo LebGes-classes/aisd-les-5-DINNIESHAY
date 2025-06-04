@@ -3,7 +3,7 @@
 #include <iostream>
 
 //Измерение времени работы заданного алгоритма с заданным количеством входных данных
-long long DurationCounter::measure(void(*algorithm)(int), int numOfInputData)
+long long DurationCounter::measure(const std::function<void()> & algorithm)
 {
   //Список измерений времени
   long long timeResults[numOfRepetitions];
@@ -13,7 +13,7 @@ long long DurationCounter::measure(void(*algorithm)(int), int numOfInputData)
     //Начальное время
     timePoint_t start = getStartTime();
     //Выполнение алгоритма
-    algorithm(numOfInputData);
+    algorithm();
     //Конечное время
     timePoint_t end = getEndTime();
 
@@ -29,20 +29,9 @@ long long DurationCounter::measure(void(*algorithm)(int), int numOfInputData)
 
   //Получаем среднее арифметическое от первых 80% значений времени
   const int toKeep = numOfRepetitions * 0.8;
-  int averageTime = findMean(timeResults, toKeep);
+  long long averageTime = findMean(timeResults, toKeep);
 
   return averageTime;
-}
-
-//Вывод времени работы алгоритма с входными данными из диапазона
-void DurationCounter::printTimeInRange(void(*algorithm)(int), int start, int end, int step)
-{
-  for (int n = start; n <= end; n += step)
-  {
-    //Измеряем время алгоритма для n-го количества входных данных
-    long long averageTime = measure(algorithm, n);
-    std::cout << "Время для " << n << ": " << averageTime << " нс\n";
-  }
 }
 
 //Получение начального времени

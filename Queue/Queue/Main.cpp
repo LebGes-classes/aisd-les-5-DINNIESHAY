@@ -3,13 +3,16 @@
 #include <ctime>
 #include "windows.h"
 
-PriorityQueue queue = PriorityQueue();
-
 //Проверка очереди при добавлении и удалении элементов
 void checkQueue()
 {
   PriorityQueue queue = PriorityQueue();
 
+  /*
+    Ожидается:
+    Результат до удаления элементов: b a f d c h e g
+    Результат после удаления элементов: f d c h e g
+  */
   queue.enqueue(11, "c");
   queue.enqueue(14, "e");
   queue.enqueue(6, "b");
@@ -18,51 +21,45 @@ void checkQueue()
   queue.enqueue(9, "f");
   queue.enqueue(14, "g");
   queue.enqueue(13, "h");
-  std::cout << "Результат до удаления элементов: ";
+  std::cout << "Result before deleting elements: ";
   queue.print();
 
   queue.dequeue();
   queue.dequeue();
-  std::cout << "Результат после удаления элементов: ";
+  std::cout << "Result after deleting elements: ";
   queue.print();
-  /*
-    Ожидается:
-    Результат до удаления элементов: b a f d c h e g
-    Результат после удаления элементов: f d c h e g
-  */
+}
+
+int getRandomInt()
+{
+  //Получение рандомного числа в диапазоне [0, 99]
+  int randomInt = rand() % 100;
+
+  return randomInt;
 }
 
 //Заполнение очереди заданным количеством элементов
-void fillQueue(int numOfValues)
+PriorityQueue getFilledQueue(int numOfValues)
 {
-  std::srand(std::time(0));
+  PriorityQueue queue = PriorityQueue();
 
   for (int i = 0; i < numOfValues; i++)
   {
-    //Приоритет задается рандомно в диапазоне [0, 99]
-    int randomPriority = rand() % 100;
+    int randomPriority = getRandomInt();
     std::string data = std::to_string(randomPriority);
 
     queue.enqueue(randomPriority, data);
   }
-}
 
-//Очищение очереди из заданного количества элементов
-void clearQueue(int numOfValues)
-{
-  for (int i = 0; i < numOfValues; i++)
-  {
-    queue.dequeue();
-  }
+  return queue;
 }
 
 int main()
 {
-  SetConsoleCP(1251);
-  SetConsoleOutputCP(1251);
+  std::srand(std::time(0));
 
   //Проверка очереди при добавлении и удалении элементов
-  std::cout << "\nДобавление и удаление элементов очереди\n";
+  std::cout << "\nAdding and deleting elements in queue\n";
   checkQueue();
  
   //Исследование производительности методов очереди
@@ -74,9 +71,24 @@ int main()
   //Шаг
   const int step = 5;
 
-  std::cout << "\nСреднее время вставки элементов в очередь для размера входных данных от 10 до 50\n";
-  durationCounter.printTimeInRange(fillQueue, startNumOfInputData, endNumOfInputData, step);
+  std::cout << "\nAverage time of priority queue methods:\n";
 
-  std::cout << "\nСреднее время удаления элементов из очереди для размера входных данных от 10 до 50\n";
-  durationCounter.printTimeInRange(clearQueue, startNumOfInputData, endNumOfInputData, step);
+  for (int n = startNumOfInputData; n <= endNumOfInputData; n += step)
+  {
+    PriorityQueue queue = getFilledQueue(n);
+
+    std::cout << "\nTime for n = " << n << ":\n";
+
+    std::cout << "enqueue - " 
+              << durationCounter.measure([&queue]() {
+                 queue.enqueue(getRandomInt(), "data"); }) << ", ";
+    
+    std::cout << "dequeue - "
+              << durationCounter.measure([&queue]() {
+                 queue.dequeue(); }) << ", ";
+
+    std::cout << "peek - "
+              << durationCounter.measure([&queue]() {
+                 queue.peek(); }) << std::endl;
+  }
 }
